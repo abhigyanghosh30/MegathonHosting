@@ -22,15 +22,15 @@ db.serialize(function() {
 
 	db.run("CREATE TABLE IF NOT EXISTS Participants(`name`	TEXT,`password`	TEXT)");
 	db.run("CREATE TABLE IF NOT EXISTS Files(name TEXT,path TEXT,PRIMARY KEY  (`name`))");
-	for(var i=1;i<=20;i++)
-	{
-		db.run(`INSERT INTO Participants(name,password) VALUES(?,?)`,['Participant'+i,'pass'+i]);
-	}
-	db.each("SELECT name FROM Participants", function(err, row) {
+	// for(var i=1;i<=20;i++)
+	// {
+	// 	db.run(`INSERT INTO Participants(name,password) VALUES(?,?)`,['Participant'+i,'pass'+i]);
+	// }
+	db.each("SELECT * FROM Participants", function(err, row) {
 		if(err){
 			console.error(err);
 		}
-	console.log(row.name);
+	console.log(row);
   });
 });
 
@@ -83,8 +83,8 @@ app.post('/upload',(req,res)=>{
     });
 	form.on('file',(name,file)=>{
 		console.log('Uploaded'+file.name);
+		db.run(`INSERT INTO Files(name,path) VALUES (?,?)`,[req.session.username,file.name]);
 	});
-	db.run(`INSERT INTO Files(name,path) VALUES (?),(?)`,[req.session.username,file.name]);
     res.redirect('/home');
 });
 
