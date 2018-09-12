@@ -86,6 +86,11 @@ app.get('/home',(req,res)=>{
 	
 });
 
+app.get('/download/:file',(req,res)=>{
+	res.download(__dirname+'/uploads/'+req.params.file);
+	res.status(200);
+});
+
 app.get('/delete/:file',(req,res)=>{
 	db.serialize(()=>{
 		db.run(`DELETE FROM Files WHERE name = (?) AND path = (?)`,[req.session.username,req.params.file]);
