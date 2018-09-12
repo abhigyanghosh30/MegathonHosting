@@ -20,13 +20,12 @@ app.use(session({
 
 db.serialize(function() {
 
-	db.run("CREATE TABLE IF NOT EXISTS Participants(id INTEGER NOT NULL, name TEXT,password TEXT,PRIMARY KEY  (`id`))");
-	// var stmt = db.prepare("INSERT INTO user_info VALUES (?)");
-	// for (var i = 0; i < 10; i++) {
- //    	stmt.run("Ipsum " + i);
-	// }
-	// stmt.finalize();
-
+	db.run("CREATE TABLE IF NOT EXISTS Participants(`name`	TEXT,`password`	TEXT)");
+	db.run("CREATE TABLE IF NOT EXISTS Files(name TEXT,path TEXT,PRIMARY KEY  (`name`))");
+	for(var i=1;i<=20;i++)
+	{
+		db.run(`INSERT INTO Participants(name,password) VALUES(?,?)`,['Participant'+i,'pass'+i]);
+	}
 	db.each("SELECT name FROM Participants", function(err, row) {
 		if(err){
 			console.error(err);
@@ -68,7 +67,6 @@ app.post('/enter',(req,res)=>{
 				res.send('No Result Found')
 			}
 		}
-			
 	});	
 });
 
@@ -86,6 +84,7 @@ app.post('/upload',(req,res)=>{
 	form.on('file',(name,file)=>{
 		console.log('Uploaded'+file.name);
 	});
+	db.run(`INSERT INTO Files(name,path) VALUES (?),(?)`,[req.session.username,file.name]);
     res.redirect('/home');
 });
 
