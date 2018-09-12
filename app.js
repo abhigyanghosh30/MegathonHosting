@@ -21,7 +21,7 @@ app.use(session({
 db.serialize(function() {
 
 	db.run("CREATE TABLE IF NOT EXISTS Participants(`name`	TEXT,`password`	TEXT)");
-	db.run("CREATE TABLE IF NOT EXISTS Files(name TEXT,path TEXT,PRIMARY KEY  (`name`))");
+	db.run("CREATE TABLE IF NOT EXISTS Files(name TEXT,path TEXT)");
 	// for(var i=1;i<=20;i++)
 	// {
 	// 	db.run(`INSERT INTO Participants(name,password) VALUES(?,?)`,['Participant'+i,'pass'+i]);
@@ -36,7 +36,8 @@ db.serialize(function() {
 
 // VIEWS
 app.get('/',(req,res)=>{
-
+	if(req.session.username)
+		res.redirect('/home')
 	res.render('login',{title: 'Login', success:false, errors: req.session.errors});
 });
 app.get('/login',(req,res)=>{
@@ -71,8 +72,27 @@ app.post('/enter',(req,res)=>{
 });
 
 app.get('/home',(req,res)=>{
-	req.session.username;
-	res.render('home',{ title:`Home of ${req.session.username}`});
+	if(!req.session.username)
+		res.redirect('/');
+	db.serialize(()=>{
+		db.all(`SELECT path FROM Files WHERE name = (?)`,[req.session.username], function(err, rows) {
+			if(err){
+				console.error(err);
+			}
+			console.log(rows);
+			res.render('home',{ title:`Home of ${req.session.username}`,files:rows});
+		});
+	});
+	
+});
+
+app.get('/delete/:file',(req,res)=>{
+	db.serialize(()=>{
+		db.run(`DELETE FROM Files WHERE name = (?) AND path = (?)`,[req.session.username,req.params.file]);
+		fs.unlinkSync(__dirname+'/uploads/'+req.params.file);
+		console.log('File Deleted');
+		res.redirect('/home');
+	});
 });
 
 app.post('/upload',(req,res)=>{
