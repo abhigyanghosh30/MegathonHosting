@@ -1,0 +1,64 @@
+extends base.pug
+
+block head
+	link(rel="stylesheet" href="/public/signin.css" type="text/css")
+
+block body
+	div.container.text-white.text-left
+		p#type
+		p#type2
+
+		form(action="/enter" method="POST")
+			div.form-group.text-left
+				label#type3 
+				input.form-element(type="text" name="name")
+			div.form-group.text-left
+				label#type4
+				input.form-element(type="password" name="password")
+			button.btn.btn-login(type="submit")
+				label#type5
+
+block script
+	script(type="text/javascript").
+		var i = 0;
+		var j = 0;
+		var k = 0;
+		var l = 0;
+		var m = 0;
+		var txt = "Hello and welcome to Megathon"; 
+		var txt2 = "";
+		var txt3 = "Enter comany name: ";
+		var txt4 = "Enter Password: ";
+		var txt5 = "Click to submit >";
+		var speed=50;
+		$(document).ready(function(){
+			typeWriter(txt,"type");
+
+		});
+		function typeWriter(text,id){
+			if(i<text.length){
+				document.getElementById(id).innerHTML += text.charAt(i);
+				i++;
+				setTimeout(function(){typeWriter(text,id);},speed);
+			}
+			else if(j<txt2.length){
+				document.getElementById("type2").innerHTML += txt2.charAt(j);
+				j++;
+				setTimeout(function(){typeWriter(txt2,"type2")},speed);
+			}
+			else if(k<txt3.length){
+				document.getElementById("type3").innerHTML += txt3.charAt(k);
+				k++;
+				setTimeout(function(){typeWriter(txt3,"type3")},speed);
+			}
+			else if(l<txt4.length){
+				document.getElementById("type4").innerHTML += txt4.charAt(l);
+				l++;
+				setTimeout(function(){typeWriter(txt3,"type3")},speed);
+			}
+			else if(m<txt5.length){
+				document.getElementById("type5").innerHTML += txt5.charAt(m);
+				m++;
+				setTimeout(function(){typeWriter(txt5,"type5")},speed);
+			}
+		}

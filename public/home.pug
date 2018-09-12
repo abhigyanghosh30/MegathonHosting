@@ -1,0 +1,11 @@
+extends base.pug
+
+block head
+
+block body
+    div.container.text-white
+        form(action="/upload" enctype="multipart/form-data" method="POST")
+        div.form-group.text-left
+            input.form-element(type="file" name="file")
+        button.btn.btn-login(type="submit")
+            label="Upload"
