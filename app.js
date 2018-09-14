@@ -49,7 +49,10 @@ app.post('/enter',(req,res)=>{
 	var post = req.body;
 	if (post.name == 'admin')
 		if(post.password == 'admin123')
+		{
+			req.session.username='admin';
 			res.redirect('/admin_home');
+		}
 		else
 			res.send('Incorrect password');
 	var query_row;
@@ -87,11 +90,15 @@ app.get('/home',(req,res)=>{
 });
 
 app.get('/download/:file',(req,res)=>{
+	if(!req.session.username)
+		res.redirect('/');
 	res.download(__dirname+'/uploads/'+req.params.file);
 	res.status(200);
 });
 
 app.get('/delete/:file',(req,res)=>{
+	if(!req.session.username)
+		res.redirect('/');
 	db.serialize(()=>{
 		db.run(`DELETE FROM Files WHERE name = (?) AND path = (?)`,[req.session.username,req.params.file]);
 		fs.unlinkSync(__dirname+'/uploads/'+req.params.file);
@@ -111,6 +118,17 @@ app.post('/upload',(req,res)=>{
 		db.run(`INSERT INTO Files(name,path) VALUES (?,?)`,[req.session.username,file.name]);
 	});
     res.redirect('/home');
+});
+
+app.get('/admin_home',(req,res)=>{
+	if(!req.session.username=='admin')
+		res.redirect('/');
+	db.all
+	res.render('admin_home',{title:'Admin'})
+});
+
+app.get('/files',(req,res)=>{
+	
 });
 
 // PORT
