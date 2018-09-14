@@ -20,5 +20,4 @@ block body
             div.form-group.text-left
                 input.form-element(type="file" name="upload" multiple)
                 input.btn.btn-login(type="submit" value="Submit")
-block script
-    
+            
