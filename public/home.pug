@@ -8,8 +8,7 @@ block body
         h3 Click to Delete
         ul
             each file in files
-                a(href='/delete/'+file.path)
-                    li=file.path
+                li(onclick=`NotifyDelete("${file.path}");`)=file.path
         h3 Click to Download
         ul
             each file in files
@@ -21,4 +20,4 @@ block body
                 input.form-element(type="file" name="upload" multiple)
                 input.btn.btn-login(type="submit" value="Submit")
 block script
-    
+    script(src="/public/js/home.js")
