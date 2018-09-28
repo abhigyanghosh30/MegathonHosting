@@ -17,7 +17,7 @@ block body
     div.container.text-white
         form(action="/upload" enctype="multipart/form-data" method="POST")
             div.form-group.text-left
-                input.form-element(type="file" name="upload" multiple)
+                input.form-element(type="file" name="upload" multiple required)
                 input.btn.btn-login(type="submit" value="Submit")
 block script
     script(src="/public/js/home.js")

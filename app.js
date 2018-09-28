@@ -108,6 +108,10 @@ app.get('/delete/:file',(req,res)=>{
 });
 
 app.post('/upload',(req,res)=>{
+	if(!req.session.username)
+	{
+		res.redirect('/home');
+	}
 	var form = new formidable.IncomingForm();
 	form.parse(req);
 	form.on('fileBegin', function (name, file){
