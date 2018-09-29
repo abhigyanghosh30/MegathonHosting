@@ -36,25 +36,28 @@ db.serialize(function() {
 
 // VIEWS
 app.get('/',(req,res)=>{
-	if(req.session.username)
+	if(!req.session.username)
+		res.render('login',{title: 'Login', success:false, errors: req.session.errors});
+	else
 		res.redirect('/home')
-	res.render('login',{title: 'Login', success:false, errors: req.session.errors});
+	
 });
 app.get('/login',(req,res)=>{
+	req.session.username=undefined;
 	res.redirect('/');
 });
 
 app.post('/enter',(req,res)=>{
 	
 	var post = req.body;
-	if (post.name == 'admin')
-		if(post.password == 'admin123')
-		{
-			req.session.username='admin';
-			res.redirect('/admin_home');
-		}
-		else
-			res.send('Incorrect password');
+	// if (post.name == 'admin')
+	// 	if(post.password == 'admin123')
+	// 	{
+	// 		req.session.username='admin';
+	// 		res.redirect('/admin_home');
+	// 	}
+	// 	else
+	// 		res.send('Incorrect password');
 	var query_row;
 	db.get(`SELECT * FROM Participants WHERE name = ?`,[post.name],(err,row)=>{
 		if(err)
@@ -109,31 +112,26 @@ app.get('/delete/:file',(req,res)=>{
 
 app.post('/upload',(req,res)=>{
 	if(!req.session.username)
-	{
 		res.redirect('/home');
-	}
 	var form = new formidable.IncomingForm();
 	form.parse(req);
+	form.maxFileSize = 20 * 1024 * 1024;
 	form.on('fileBegin', function (name, file){
         file.path = __dirname + '/uploads/' + file.name;
     });
 	form.on('file',(name,file)=>{
 		console.log('Uploaded'+file.name);
 		db.run(`INSERT INTO Files(name,path) VALUES (?,?)`,[req.session.username,file.name]);
+		res.redirect('/home');
 	});
-    res.redirect('/home');
+	form.on('error', (err) => {
+		res.render('error',{title:"Error",error:"File size not within 20MB."});
+		// res.send('File size not within 20MB.');
+	})
+    
 });
 
-app.get('/admin_home',(req,res)=>{
-	if(!req.session.username=='admin')
-		res.redirect('/');
-	db.all
-	res.render('admin_home',{title:'Admin'})
-});
 
-app.get('/files',(req,res)=>{
-	
-});
 
 // PORT
 const port = process.env.PORT || 3000;

@@ -4,17 +4,16 @@ block head
 	link(rel="stylesheet" href="/public/signin.css" type="text/css")
 
 block body
-	div.container.text-white.text-left
-		p Hello and welcome to Megathon
-		p 
-
-		form(action="/enter" method="POST")
-			div.form-group.text-left
-				label Enter team name: 
-				input.form-element(type="text" name="name")
-			div.form-group.text-left
-				label Enter Password
-				input.form-element(type="password" name="password")
+	div.container
+		form.form-signin(action="/enter" method="POST")
+			img.mb-4(src="/public/logo_new.png" height="72")
+			h1 Megathon 2018
+			div.form-group
+				label(for="name") Enter team name: 
+				input.form-control(type="text" name="name" id="name")
+			div.form-group
+				label(for="password") Enter Password
+				input.form-control(type="password" name="password" id="password")
 			button.btn.btn-login(type="submit") Click to submit
 
 block script
