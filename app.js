@@ -128,16 +128,21 @@ app.post("/upload", (req, res) => {
     form.parse(req);
     form.maxFileSize = 50 * 1024 * 1024;
     form.on("fileBegin", function(name, file) {
-        file.path = __dirname + "/uploads/" + file.name;
+		if(file.name=="")
+			file.name="empty";
+			file.path = __dirname + "/uploads/" + file.name;
     });
     form.on("file", (name, file) => {
-        console.log("Uploaded", file.name);
+		if(file.name=="empty")
+			file.name="empty";
 
-        db.run("INSERT INTO Files(name,path) VALUES (?,?)", [
-            req.session.username,
-            file.name
-        ]);
-        res.redirect("/home");
+		console.log("Uploaded", file.name);
+
+		db.run("INSERT INTO Files(name,path) VALUES (?,?)", [
+			req.session.username,
+			file.name
+		]);
+		res.redirect("/home");
     });
     form.on("error", err => {
         res.render("error", {
