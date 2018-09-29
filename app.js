@@ -126,12 +126,13 @@ app.post("/upload", (req, res) => {
     if (!req.session.username) res.redirect("/home");
     var form = new formidable.IncomingForm();
     form.parse(req);
-    form.maxFileSize = 20 * 1024 * 1024;
+    form.maxFileSize = 50 * 1024 * 1024;
     form.on("fileBegin", function(name, file) {
         file.path = __dirname + "/uploads/" + file.name;
     });
     form.on("file", (name, file) => {
-        console.log("Uploaded" + file.name);
+        console.log("Uploaded", file.name);
+
         db.run("INSERT INTO Files(name,path) VALUES (?,?)", [
             req.session.username,
             file.name
@@ -141,9 +142,8 @@ app.post("/upload", (req, res) => {
     form.on("error", err => {
         res.render("error", {
             title: "Error",
-            error: "File size not within 20MB."
+            error: "File size not within 50MB."
         });
-        // res.send('File size not within 20MB.');
     });
 });
 

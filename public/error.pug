@@ -1,6 +1,11 @@
 extends base.pug
 
-block body  
-    h1=error
-    a(href="/home")
-        button.btn.btn-primary Back to Home
+block head
+    link(rel="stylesheet" href="/public/home.css" type="text/css")
+
+block body
+    div.errorBlock
+        h2=error
+        br
+        a(href="/home")
+            button.btn.btn-primary Back to Home
