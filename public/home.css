@@ -1,4 +1,3 @@
-
 /*
  * Globals
  */
@@ -7,19 +6,18 @@
 a,
 a:focus,
 a:hover {
-  color: #bba559;
+    color: #bba559;
 }
 
 /* Custom default button */
 .btn-secondary,
 .btn-secondary:hover,
 .btn-secondary:focus {
-  color: #111628;
-  text-shadow: none; /* Prevent inheritance from `body` */
-  background-color: #bba559;
-  border: .05rem solid #bba559;
+    color: #111628;
+    text-shadow: none; /* Prevent inheritance from `body` */
+    background-color: #bba559;
+    border: 0.05rem solid #bba559;
 }
-
 
 /*
  * Base structure
@@ -27,104 +25,123 @@ a:hover {
 
 html,
 body {
-  height: 100%;
-  background-color: #111628;
+    height: 100%;
+    background-color: #111628;
 }
 
 body {
-  display: -ms-flexbox;
-  display: -webkit-box;
-  display: flex;
-  -ms-flex-pack: center;
-  -webkit-box-pack: center;
-  justify-content: center;
-  color: #bba559;
-  text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
-  box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);
+    display: -ms-flexbox;
+    display: -webkit-box;
+    display: flex;
+    -ms-flex-pack: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    color: #bba559;
+    text-shadow: 0 0.05rem 0.1rem rgba(0, 0, 0, 0.5);
+    box-shadow: inset 0 0 5rem rgba(0, 0, 0, 0.5);
 }
 
 .cover-container {
-  max-width: 42em;
+    max-width: 42em;
 }
-
 
 /*
  * Header
  */
 .masthead {
-  margin-bottom: 2rem;
+    margin-bottom: 2rem;
 }
 
-.img-icon{
+.img-icon {
     height: 7vh;
 }
 
-.btn-submit{
-    color:#111628;
+.btn-submit {
+    color: #111628;
     background: #bba559;
 }
-.btn-submit:hover{
+.btn-submit:hover {
     color: #bba559;
-    background:transparent;
+    background: transparent;
 }
 
 .masthead-brand {
-  margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 .nav-masthead .nav-link {
-  padding: .25rem 0;
-  font-weight: 700;
-  color: rgba(255, 255, 255, .5);
-  background-color: transparent;
-  border-bottom: .25rem solid transparent;
+    padding: 0.25rem 0;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.5);
+    background-color: transparent;
+    border-bottom: 0.25rem solid transparent;
 }
 
 .nav-masthead .nav-link:hover,
 .nav-masthead .nav-link:focus {
-  border-bottom-color: rgba(255, 255, 255, .25);
+    border-bottom-color: rgba(255, 255, 255, 0.25);
 }
 
 .nav-masthead .nav-link + .nav-link {
-  margin-left: 1rem;
+    margin-left: 1rem;
 }
 
 .nav-masthead .active {
-  color: #bba559;
-  border-bottom-color: #bba559;
+    color: #bba559;
+    border-bottom-color: #bba559;
 }
 
 @media (min-width: 48em) {
-  .masthead-brand {
-    float: left;
-  }
-  .nav-masthead {
-    float: right;
-  }
+    .masthead-brand {
+        float: left;
+    }
+    .nav-masthead {
+        float: right;
+    }
 }
-
 
 /*
  * Cover
  */
 .cover {
-  padding: 0 1.5rem;
+    padding: 0 1.5rem;
 }
 .cover .btn-lg {
-  padding: .75rem 1.25rem;
-  font-weight: 700;
-  margin: 10px;
+    padding: 0.75rem 1.25rem;
+    font-weight: 700;
+    margin: 10px;
+    outline: none;
 }
-.custom-file-label{
-    padding:0.3rem .5rem;
-    background-color:transparent;
+.custom-file-label {
+    padding: 0.3rem 0.5rem;
+    background-color: transparent;
     color: #bba559;
     border: 1px solid #bba559;
+    cursor: pointer;
+    outline: none;
+    border: none;
+}
+
+table th {
+    border-bottom: none !important;
+}
+
+hr {
+    border-top: 1px solid white;
+}
+
+.btn-submit {
+    border: 1px solid #bba559;
+    font-size: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    outline: none;
+    cursor: pointer;
 }
 
 /*
  * Footer
  */
 .mastfoot {
-  color: rgba(255, 255, 255, .5);
+    color: rgba(255, 255, 255, 0.5);
 }

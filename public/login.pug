@@ -7,13 +7,13 @@ block body
 	div.container
 		form.form-signin(action="/enter" method="POST")
 			img.mb-4(src="/public/logo_new.png" height="72")
-			h1 Megathon 2018
+			h1.megathon-header MEGATHON 2018
 			div.form-group
-				label(for="name") Enter team name: 
+				label(for="name") Team name
 				input.form-control(type="text" name="name" id="name")
 			div.form-group
-				label(for="password") Enter Password
+				label(for="password") Password
 				input.form-control(type="password" name="password" id="password")
-			button.btn.btn-login(type="submit") Click to submit
+			button.btn.btn-login(type="submit") Login
 
 block script
