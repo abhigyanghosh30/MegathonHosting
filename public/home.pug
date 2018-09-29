@@ -2,15 +2,16 @@ extends base.pug
 
 block head
     link(rel="stylesheet" href="/public/home.css" type="text/css")
+    script(src="/public/home.js")
 
 block body
 
     div.container.cover-container.d-flex.h-100.p-3.mx-auto.flex-column
         header.masthead.mb-auto 
             div.inner 
-                h3.masthead-brand Megathon 2018
-                    br
-                    img.img-icon(src="/public/logo_new.png")
+                h3.masthead-brand
+                    a(href="https://megathon.in" title="Megathon 2018")
+                        img.img-icon(src="/public/logo_new.png")
                 nav.nav.nav-masthead.justify-content-center
                     a.nav-link.active(href="/home") File Upload Portal
                     a.nav-link(href="/login") Logout
@@ -18,24 +19,27 @@ block body
         main.inner.cover(role="main")
                 h1.cover-heading Uploaded Files
                 table.lead.table
-                    thead
-                        tr
-                            th File Name
-                            th Download
-                            th Delete
+                    if filesExist
+                        thead
+                            tr
+                                th File Name
+                                th Download
+                                th Delete
                     tbody
-                    each file in files
-                        tr
-                            td=file.path
-                            td 
-                                a(href='/download/'+file.path)
-                                    button.btn.btn-warning Download
-                            td
-                                a(href="#" onclick=`NotifyDelete("${file.path}");`)
-                                    button.btn.btn-danger DELETE
+                        each file in files
+                            tr
+                                td=file.path
+                                td 
+                                    a(href='/download/'+file.path)
+                                        button.btn.btn-warning Download
+                                td
+                                    a(href="#" onclick=`NotifyDelete("${file.path}");`)
+                                        button.btn.btn-danger Delete
+                if filesExist
+                    hr
                 form.lead(action="/upload" enctype="multipart/form-data" method="POST")
                         div.custom-file
-                            input.custom-file-input(type="file" name="upload" id="upload" multiple required)
+                            input.custom-file-input.btn.btn-lg(type="file" name="upload" id="upload" multiple required)
                             label.custom-file-label.text-left(for="upload") Choose File   
                             br
                             button.btn.btn-lg.btn-submit(type="submit") Upload
