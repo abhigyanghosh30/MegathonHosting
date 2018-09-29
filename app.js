@@ -133,7 +133,7 @@ app.post("/upload", (req, res) => {
 			file.path = __dirname + "/uploads/" + file.name;
     });
     form.on("file", (name, file) => {
-		if(file.name=="empty")
+		if(file.name=="")
 			file.name="empty";
 
 		console.log("Uploaded", file.name);
