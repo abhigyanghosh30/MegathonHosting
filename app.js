@@ -54,14 +54,15 @@ app.get("/login", (req, res) => {
 
 app.post("/enter", (req, res) => {
     var post = req.body;
-    // if (post.name == 'admin')
-    // 	if(post.password == 'admin123')
-    // 	{
-    // 		req.session.username='admin';
-    // 		res.redirect('/admin_home');
-    // 	}
-    // 	else
-    // 		res.send('Incorrect password');
+    if (post.name == 'admin')
+    	if(post.password == 'admin123')
+    	{
+    		req.session.username='admin';
+			res.redirect('/admin_home');
+			return;
+    	}
+    	else
+    		res.send('Incorrect password');
     var query_row;
     db.get(
         "SELECT * FROM Participants WHERE name = ?",
@@ -150,6 +151,22 @@ app.post("/upload", (req, res) => {
             error: "File size not within 50MB."
         });
     });
+});
+
+app.get("/admin_home",(req,res)=>{
+	if(req.session.username!="admin")
+		res.redirect('/login');
+	db.serialize(()=>{
+		db.all("SELECT * FROM Files",(err,rows)=>{
+			if(err){
+				console.log(err);
+			}
+			else{
+				console.log(rows);
+				res.render('admin_home',{title:"Admin Home",files:rows});
+			}
+		});
+	});
 });
 
 // PORT

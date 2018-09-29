@@ -1,6 +1,18 @@
 extends base.pug
 
 block head
+    table.table
+        thead.thead-dark
+            tr
+                th Team Name
+                th File
+        tbody
+        each file in files
+            tr 
+                td=file.name
+                td
+                    a(href='/download/'+file.path)
+                        button.btn.btn-warning=file.path          
 
 block body
     
