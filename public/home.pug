@@ -1,6 +1,7 @@
 extends base.pug
 
 block head
+    link(rel='shortcut icon' type='image/x-icon' href='/public/favicon.png')
     link(rel="stylesheet" href="/public/home.css" type="text/css")
     script(src="/public/home.js")
 
@@ -17,32 +18,35 @@ block body
                     a.nav-link(href="/login") Logout
 
         main.inner.cover(role="main")
-                h1.cover-heading Uploaded Files
-                table.lead.table
-                    if filesExist
-                        thead
-                            tr
-                                th File Name
-                                th Download
-                                th Delete
-                    tbody
-                        each file in files
-                            tr
-                                td=file.path
-                                td 
-                                    a(href='/download/'+file.path)
-                                        i.icon(style="background-image:url('/public/download.svg');")
-                                td
-                                    a(href="#" onclick=`NotifyDelete("${file.path}");`)
-                                        i.icon(style="background-image:url('/public/trash.svg');")
                 if filesExist
-                    hr
-                form.lead(action="/upload" enctype="multipart/form-data" method="POST")
-                        div.custom-file
-                            input.custom-file-input.btn.btn-lg(type="file" name="upload" id="upload" multiple required)
-                            label.custom-file-label.text-left(for="upload") Choose File   
+                    h1.cover-heading Uploaded file
+                else
+                    h1.cover-heading Upload a file
+                
+                if filesExist
+                    table.lead.table                
+                        tbody
+                            each file in files
+                                tr
+                                    td=file.path
+                                    td 
+                                        a(href='/download/'+file.path)
+                                            i.icon(style="background-image:url('/public/download.svg');" title="Download")
+                                    td
+                                        a(href="#" onclick=`NotifyDelete("${file.path}");`)
+                                            i.icon(style="background-image:url('/public/trash.svg');"  title="Delete")
+                    p You have already uploaded a file. To edit your file, please delete it above first,
+                        | and then reupload edited file.
+                else
+                    form.lead(action="/upload" enctype="multipart/form-data" method="POST")
+                            div.custom-file
+                                input.custom-file-input.btn.btn-lg(type="file" name="upload" id="upload" required)
+                                label.custom-file-label.text-left(for="upload") Choose File   
                             br
                             button.btn.btn-lg.btn-submit(type="submit") Upload
+                    p In case of more than one files, please zip them together and submit the zipped file. 
+                        | See help for <a href="https://support.microsoft.com/en-in/help/14200/windows-compress-uncompress-zip-files">Windows</a>, <a href="https://support.apple.com/kb/ph25411?locale=en_GB">macOS</a>, and <a href="https://unix.stackexchange.com/questions/6596/how-do-i-zip-unzip-on-the-unix-command-line">Linux</a>.
+                    
 
 
         footer.mastfoot.mt-auto
