@@ -126,6 +126,15 @@ table th {
     border-bottom: none !important;
 }
 
+i.icon {
+    width: 20px;
+    cursor: pointer;
+    height: 20px;
+    display: inline-block;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
 hr {
     border-top: 1px solid white;
 }
@@ -144,4 +153,10 @@ hr {
  */
 .mastfoot {
     color: rgba(255, 255, 255, 0.5);
+}
+
+@media (max-width: 768px) {
+    .nav.nav.nav-masthead.justify-content-center {
+        margin-top: 10px;
+    }
 }

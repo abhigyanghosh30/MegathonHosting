@@ -31,10 +31,10 @@ block body
                                 td=file.path
                                 td 
                                     a(href='/download/'+file.path)
-                                        button.btn.btn-warning Download
+                                        i.icon(style="background-image:url('/public/download.svg');")
                                 td
                                     a(href="#" onclick=`NotifyDelete("${file.path}");`)
-                                        button.btn.btn-danger Delete
+                                        i.icon(style="background-image:url('/public/trash.svg');")
                 if filesExist
                     hr
                 form.lead(action="/upload" enctype="multipart/form-data" method="POST")
@@ -47,7 +47,10 @@ block body
 
         footer.mastfoot.mt-auto
             div.inner
-                p Made by ECell IIIT-H Tech Team
+                p
+                    a(href="https://ecell.iiit.ac.in") Made by ECell IIIT-H Tech Team
+                    br
+                    | Thanks to <a href="https://fontawesome.com/license/free">FontAwesome 5</a> (used with changes)
                 
 block script
     script(src="/public/js/home.js")
