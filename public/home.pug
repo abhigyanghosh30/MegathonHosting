@@ -35,24 +35,25 @@ block body
                                     td
                                         a(href="#" onclick=`NotifyDelete("${file.path}");`)
                                             i.icon(style="background-image:url('/public/trash.svg');"  title="Delete")
-                    p You have already uploaded a file. To edit your file, please delete it above first,
+                    p You have already uploaded a file. To edit your file, please delete it above first, 
                         | and then reupload edited file.
                 else
                     form.lead(action="/upload" enctype="multipart/form-data" method="POST")
                             div.custom-file
-                                input.custom-file-input.btn.btn-lg(type="file" name="upload" id="upload" required)
+                                input.custom-file-input.btn.btn-lg(type="file" name="upload" id="upload" required accept=".zip, .rar, .tar")
                                 label.custom-file-label.text-left(for="upload") Choose File   
                             br
                             button.btn.btn-lg.btn-submit(type="submit") Upload
-                    p In case of more than one files, please zip them together and submit the zipped file. 
-                        | See help for <a href="https://support.microsoft.com/en-in/help/14200/windows-compress-uncompress-zip-files">Windows</a>, <a href="https://support.apple.com/kb/ph25411?locale=en_GB">macOS</a>, and <a href="https://unix.stackexchange.com/questions/6596/how-do-i-zip-unzip-on-the-unix-command-line">Linux</a>.
+                    p Please submit a single zip file, containing all your documents, images, etc.  
+                        br
+                        | For help creating a zip file, see <a href="https://support.microsoft.com/en-in/help/14200/windows-compress-uncompress-zip-files">Windows</a>, <a href="https://support.apple.com/kb/ph25411?locale=en_GB">macOS</a>, and <a href="https://unix.stackexchange.com/questions/6596/how-do-i-zip-unzip-on-the-unix-command-line">Linux</a>.
                     
 
 
         footer.mastfoot.mt-auto
             div.inner
-                p
-                    a(href="https://ecell.iiit.ac.in") Made by ECell IIIT Hyderabad Tech Team
+                p Made by 
+                    a(href="https://ecell.iiit.ac.in") ECell IIIT Hyderabad Tech Team
                 
 block script
     script(src="/public/js/home.js")
