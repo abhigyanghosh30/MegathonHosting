@@ -40,7 +40,7 @@ block body
                 else
                     form.lead(action="/upload" enctype="multipart/form-data" method="POST")
                             div.custom-file
-                                input.custom-file-input.btn.btn-lg(type="file" name="upload" id="upload" required accept=".zip, .rar, .tar")
+                                input.custom-file-input.btn.btn-lg(type="file" name="upload" id="upload" required)
                                 label.custom-file-label.text-left(for="upload") Choose File   
                             br
                             button.btn.btn-lg.btn-submit(type="submit") Upload

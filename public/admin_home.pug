@@ -4,15 +4,16 @@ block head
     table.table
         thead.thead-dark
             tr
-                th Team Name
+                th Registration number
+                th Team name
                 th File
         tbody
         each file in files
-            tr 
+            tr
+                td=file.regno
                 td=file.name
                 td
                     a(href='/download/'+file.path)
                         button.btn.btn-warning=file.path          
 
 block body
-    

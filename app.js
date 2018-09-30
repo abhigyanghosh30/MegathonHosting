@@ -22,9 +22,9 @@ app.use(
 
 db.serialize(function() {
     db.run(
-        "CREATE TABLE IF NOT EXISTS Participants(`name`	TEXT,`password`	TEXT)"
+        "CREATE TABLE IF NOT EXISTS Participants(`name`	TEXT,`password`	TEXT,`regno` TEXT UNIQUE, PRIMARY KEY(name))"
     );
-    db.run("CREATE TABLE IF NOT EXISTS Files(name TEXT,path TEXT)");
+    db.run("CREATE TABLE IF NOT EXISTS Files(`name` TEXT,`path` TEXT,`regno` TEXT, FOREIGN KEY(regno) REFERENCES Participants(regno) )");
     // for(var i=1;i<=20;i++)
     // {
     // 	db.run(`INSERT INTO Participants(name,password) VALUES(?,?)`,['Participant'+i,'pass'+i]);
@@ -55,9 +55,10 @@ app.get("/login", (req, res) => {
 app.post("/enter", (req, res) => {
     var post = req.body;
     if (post.name == 'admin')
-    	if(post.password == 'admin123')
+    	if(post.password == 'mastergworksinc@123')
     	{
-    		req.session.username='admin';
+			req.session.username='admin';
+			req.session.regno='admin';
 			res.redirect('/admin_home');
 			return;
     	}
@@ -73,7 +74,8 @@ app.post("/enter", (req, res) => {
             } else {
                 query_row = row;
                 if (row && row.password == post.password) {
-                    req.session.username = post.name;
+					req.session.username = post.name;
+					req.session.regno = row.regno;
                     res.redirect("/home");
                 } else {
                     res.send("No Result Found");
@@ -130,7 +132,7 @@ app.post("/upload", (req, res) => {
     form.maxFileSize = 50 * 1024 * 1024;
     form.on("fileBegin", function(name, file) {
 		if(file.name=="")
-			file.name="empty";
+			file.name = "empty";
 			file.path = __dirname + "/uploads/" + file.name;
     });
     form.on("file", (name, file) => {
@@ -139,9 +141,10 @@ app.post("/upload", (req, res) => {
 
 		console.log("Uploaded", file.name);
 
-		db.run("INSERT INTO Files(name,path) VALUES (?,?)", [
+		db.run("INSERT INTO Files(name,path,regno) VALUES (?,?,?)", [
 			req.session.username,
-			file.name
+			file.name,
+			req.session.req
 		]);
 		res.redirect("/home");
     });
@@ -157,7 +160,7 @@ app.get("/admin_home",(req,res)=>{
 	if(req.session.username!="admin")
 		res.redirect('/login');
 	db.serialize(()=>{
-		db.all("SELECT * FROM Files",(err,rows)=>{
+		db.all("SELECT * FROM Files", (err, rows)=>{
 			if(err){
 				console.log(err);
 			}
